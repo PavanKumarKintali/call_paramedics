@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script >
+        function showMessage(){
+            var ctx1 = document.getElementById("message1");
+            var ctx2 = document.getElementById("message2");
+            var ctx3 = document.getElementById("message3");
+            var ctx4 = document.getElementById("message4");
+            var ctx5 = document.getElementById("message5");
+            var arr = {name: ctx1.value , email : ctx2.value , mobileNumber : ctx3.value , location: ctx4.value , expertise: ctx5.value}
+            $.ajax({
+            type:"POST",
+            url: "http://localhost:8080/api/v1/doctor",
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify(arr),
+            success:function(data){
+                alert('hi');
+            },
+            error(jqXHR,textStatus,errorThrown){
+                $('#errormsg').text(JSON.parse(jqXHR.responseText).message);
+                alert(JSON.parse(jqXHR.responseText).message);
+            }
+        });
+        }
+    </script>
+</head>
+<body>
+  <h1>Doctor Sign-in</h1>
+    <form>
+        Enter name: <input type="text" id = "message1"><br><br>
+        Enter email:<input type="text" id = "message2"><br>
+        <p id="errormsg"></p>
+        Enter mobileNumber:<input type="text" id = "message3"><br><br>
+        Enter location:<input type="text" id = "message4"><br><br>
+        Enter Expertise:<input type="text" id = "message5"><br><br>
+        <input type="button" onclick="showMessage()" value="submit" />
+    </form>
+</body>
+</html>

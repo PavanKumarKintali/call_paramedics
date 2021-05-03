@@ -1,0 +1,29 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script >
+    function showMessage(){
+        var ctx1 = document.getElementById("message1");
+        var ctx2 = document.getElementById("message2");
+        var arr = {email : ctx1.value , mobileNumber : ctx2.value}
+          $.ajax({
+          type:"GET",
+          url: "http://localhost:8080/api/v1/doctor/login?email="+ctx1.value+"&mobileNumber="+ctx2.value,
+          success:function(data){
+            $('#errormsg').text(data);
+          },
+          error(jqXHR,textStatus,errorThrown){
+              alert(JSON.parse(jqXHR.responseText).message);
+          }
+          });
+      }
+</script>
+<div class="login">
+  <h1>Doctor Login</h1>
+    <form method="post">
+      <input type="text" name="u" placeholder="Username" required="required" id= "message1"/><br><br>
+        <input type="password" name="p" placeholder="Password" required="required" id= "message2"/><br><br>
+        <input type="button" onclick="showMessage()" value="login">
+        <p id="errormsg"></p>
+    </form>
+</div>
+</html>

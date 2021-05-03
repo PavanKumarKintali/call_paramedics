@@ -1,0 +1,46 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+         var LOCATION;
+         var EXPERTISE;
+
+          function getData(){
+            var ctx1 = document.getElementById("message1");
+            $.ajax({
+            type:"GET",
+            url: "http://localhost:8080/api/v1/appointment/location",
+            success:function(data){
+                // alert(JSON.stringify(data))
+                LOCATION=(data)
+            },
+            error(jqXHR,textStatus,errorThrown){
+                alert(errorThrown);
+            }
+        });
+      }
+      $(document).ready(function(){
+        getData()
+        $("#location").click(function(){
+             $("#location").find('option').remove();
+                for(i=0; i < LOCATION.length; i++){
+                     $("#location").append('<option value="'+LOCATION[i]+'">'+LOCATION[i]+'</option>');
+                 }
+        });
+         });
+  </script>
+</head>
+  <body bgcolor="Lightskyblue">
+  <h1>Login Succesful<h1>
+    Please Select a Location:
+    <select id="location">
+      <option value="">--Please choose an option--</option>
+    <option selected value="base">Please Select</option>
+  </select>
+  Please Select a Expertise:
+  <select id="expertise">
+    <option value="">--Please choose an option--</option>
+  <option selected value="base">Please Select</option>
+</select>
+  </body>
+</html>

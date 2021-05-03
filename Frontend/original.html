@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script >
+        function showMessage(){
+            var ctx1 = document.getElementById("message1");
+            var ctx2 = document.getElementById("message2");
+            var ctx3 = document.getElementById("message3");
+            var ctx4 = document.getElementById("message4");
+            var arr = {name: ctx1.value , email : ctx2.value , mobileNumber : ctx3.value , location: ctx4.value}
+            $.ajax({
+            type:"POST",
+            url: "http://localhost:8080/api/v1/user",
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify(arr),
+            success:function(data){
+                alert('hi');
+            },
+            error(jqXHR,textStatus,errorThrown){
+                $('#errormsg').text(JSON.parse(jqXHR.responseText).message);
+                alert(JSON.parse(jqXHR.responseText).message);
+            }
+        });
+        }
+        function getData(){
+          var ctx1 = document.getElementById("message1");
+          $.ajax({
+          type:"GET",
+          url: "http://localhost:8080/api/v1/user/getMobile?name="+ctx1.value,
+          success:function(data){
+              alert(JSON.parse(JSON.stringify(data)).mobileNumber);
+              $('#getMobile').text(JSON.stringify(data));
+
+          },
+          error(jqXHR,textStatus,errorThrown){
+              $('#errormsg').text(JSON.parse(jqXHR.responseText).message);
+              alert(JSON.parse(jqXHR.responseText).message);
+          }
+      });
+        }
+    </script>
+</head>
+<body>
+    <form>
+        Enter name: <input type="text" id = "message1"><br>
+        <input type="button" onclick="getData()" value="submit" />
+        <p id="getMobile"></p>
+        Enter email:<input type="text" id = "message2"><br>
+        <p id="errormsg"></p>
+        Enter mobileNumber:<input type="text" id = "message3"><br>
+        Enter location:<input type="text" id = "message4"><br>
+        <input type="button" onclick="showMessage()" value="submit" />
+    </form>
+</body>
+</html>
